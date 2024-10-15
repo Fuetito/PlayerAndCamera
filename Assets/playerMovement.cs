@@ -1,22 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
-    CharacterController _characterController;    
-    public float Speed = 1;
+    CharacterController _characterController;
+    public float Speed=1;
     void Start()
     {
         _characterController = GetComponent<CharacterController>();
-
     }
-
 
     void Update()
     {
         Move();
-        
     }
 
     private void Move()

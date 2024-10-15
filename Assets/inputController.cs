@@ -7,20 +7,28 @@ public class InputController : MonoBehaviour
 {
     private Vector2 _move;
 
-    public Vector2 Move => _move;
 
-    //same
-    public Vector2 GetMove()
-    {
-        return _move;
-    }
-    private void OnMove(InputValue input)
+    public Vector2 InputMove => _move;
+
+    private bool _jump;
+    public bool Jump => _jump;
+
+    private void OnMove(InputValue input) //coge las flechas del teclado
     {
         _move=input.Get<Vector2>();
     }
 
+    private void OnJump()
+    {
+        _jump = true;
+    }
+    private void LateUpdate()
+    {
+        _jump = false;
+    }
+
     private void Update()
     {
-        Debug.Log(Move);
+        Debug.Log(InputMove);
     }
 }

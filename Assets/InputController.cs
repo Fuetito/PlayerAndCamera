@@ -29,6 +29,6 @@ public class InputController : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(InputMove);
+        Debug.Log(_jump);
     }
 }

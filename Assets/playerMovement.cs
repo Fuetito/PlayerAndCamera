@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump(ref Vector3 velocity)
     {
-        velocity.y += JumpSpeed;
+        velocity.y = JumpSpeed;
     }
 
     private bool ShouldJump()

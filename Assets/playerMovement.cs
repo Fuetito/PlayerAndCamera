@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     CharacterController _characterController;
     InputController _input;
+    GroundChecker _groundChecker;
     public float Speed=1;
     private Vector3 _lastVelocity;
     private float JumpSpeed = 10;
@@ -15,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _characterController = GetComponent<CharacterController>();
         _input = GetComponent<InputController>();
+        _groundChecker = GetComponentInChildren<GroundChecker>(); //children porque es un componente hijo de un grupo
     }
 
     void Update()
@@ -31,7 +33,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool ShouldJump()
     {
-        return _input.Jump;
+        return _input.Jump && _groundChecker.Grounded;
+
     }
 
     private void Move()
@@ -41,9 +44,13 @@ public class PlayerMovement : MonoBehaviour
         //_characterController.SimpleMove(direction * Speed); //con el método simplemove
 
         Vector3 velocity = new Vector3();
-        velocity.x = direction.x * Speed;
+
+        float smoothFactor = _groundChecker.Grounded? 1 : 0.1f * Time.deltaTime; //el ? es como hacer un if, se hace la pregunta, si la respuesta es si, le asigno el valor 1
+
+
+        velocity.x = Mathf.Lerp(_lastVelocity.x, direction.x * Speed, smoothFactor);
         velocity.y = _lastVelocity.y;
-        velocity.z = direction.z * Speed;
+        velocity.z = Mathf.Lerp(_lastVelocity.z, direction.z * Speed, smoothFactor);
 
 
         velocity.y = GetGravity();
